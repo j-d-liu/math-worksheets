@@ -1,4 +1,4 @@
-# ✏️ Grade 3 Math Drill Generator
+# ✏️ Free math worksheet creator
 
 I created this tool because I couldn't find a simple, ad-free math worksheet generator for my daughter. Most existing websites were either cluttered with ads, required a subscription, or had messy print layouts that wasted paper.
 
