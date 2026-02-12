@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Free Math Worksheet Generator | Grade 1 to 3 Arithmetic (No Login)</title>
+    <meta name="description" content="Instantly generate and print custom math worksheets for Grade 1 to 3. Addition, subtraction, multiplication, and division drills. 100% free, no ads, and no registration required.">
+    <meta name="keywords" content="math worksheet generator, grade 1 to 3 math, printable math drills, addition subtraction worksheets, free math tool, homeschool math">
+    
+    <meta property="og:title" content="Instant Grade 1 to 3 Math Worksheet Generator">
+    <meta property="og:description" content="Generate printable arithmetic drills in seconds. No login, no ads, just math.">
+    <meta property="og:type" content="website">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Simple Math Drill Generator",
+      "operatingSystem": "Web",
+      "applicationCategory": "EducationalApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": "Generate addition, subtraction, multiplication, and division worksheets for Grade 1 to 3. No login required. Printable A4 layout."
+    }
+    </script>
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --ui-bg: #f8fafc;
+            --page-width: 210mm;
+            --page-height: 296mm; 
+            --print-padding: 30mm; 
+        }
+
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--ui-bg);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- WEB UI CONTROLS --- */
+        .controls {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 650px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        h1 { margin: 0 0 10px 0; font-size: 1.5rem; color: #1e293b; }
+        .description { color: #64748b; margin-bottom: 25px; font-size: 0.95rem; line-height: 1.5; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; color: #475569; }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: white;
+        }
+
+        .op-group { display: flex; gap: 15px; flex-wrap: wrap; }
+        .op-item { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer; }
+
+        button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover { background: #1d4ed8; }
+
+        /* SEO Content Section */
+        .seo-content {
+            max-width: 650px;
+            color: #64748b;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        .seo-content h2 { font-size: 1.1rem; color: #334155; margin-bottom: 10px; }
+
+        /* --- PRINTABLE WORKSHEET LAYOUT --- */
+        #worksheet {
+            display: none; 
+            background: white;
+            width: var(--page-width);
+            height: var(--page-height);
+            padding: var(--print-padding);
+            margin: 0 auto;
+            flex-direction: column;
+            overflow: hidden; 
+        }
+
+        .sheet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1.5px solid #000;
+            padding-bottom: 8px;
+            margin-bottom: 35px;
+        }
+        .title-area h2 { margin: 0; font-size: 16pt; color: #000; font-weight: 700; }
+        .meta-area { text-align: right; font-size: 9pt; line-height: 1.4; color: #333; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 50px;
+            flex-grow: 1;
+        }
+
+        .problem-cell {
+            display: flex;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+
+        .prob-idx {
+            font-family: 'Inter', sans-serif;
+            font-size: 8pt;
+            color: #888;
+            width: 25px;
+            font-weight: normal;
+        }
+
+        .num-box { display: inline-block; text-align: right; width: 3ch; }
+        .op-box { display: inline-block; text-align: center; width: 2.5ch; }
+        .eq-box { padding-left: 5px; }
+
+        .answer-line {
+            flex-grow: 1;
+            border-bottom: 1px solid #000;
+            margin-left: 10px;
+            height: 1.2em;
+        }
+
+        .count-20 .problem-cell { height: 60px; font-size: 20pt; }
+        .count-40 .problem-cell { height: 40px; font-size: 16pt; }
+        .count-60 .problem-cell { height: 28px; font-size: 13pt; }
+
+        .sheet-footer {
+            margin-top: auto;
+            padding-top: 15px;
+            text-align: center;
+            font-size: 7pt;
+            color: #999;
+            letter-spacing: 0.5px;
+            border-top: 0.5px solid #eee;
+        }
+
+        @media print {
+            @page { size: A4; margin: 0mm; }
+            html, body { height: 100%; margin: 0 !important; padding: 0 !important; background: #fff; }
+            .controls, .seo-content { display: none !important; }
+            #worksheet { display: flex !important; box-shadow: none; border: none; max-height: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="controls">
+        <h1>Grade 1 to 3 Math Worksheet Generator</h1>
+        <p class="description">
+            The simplest tool for parents and teachers. Instantly create printable arithmetic drills to improve math fluency.
+        </p>
+        
+        <div class="form-row">
+            <div class="field">
+                <label for="count">How many questions?</label>
+                <select id="count">
+                    <option value="20">20 Questions</option>
+                    <option value="40" selected>40 Questions</option>
+                    <option value="60">60 Questions</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="max">Maximum value?</label>
+                <select id="max">
+                    <option value="10">Sums up to 10</option>
+                    <option value="20">Sums up to 20</option>
+                    <option value="100" selected>Sums up to 100</option>
+                    <option value="1000">Sums up to 1000</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="field" style="margin-bottom: 25px;">
+            <label>Include Operations</label>
+            <div class="op-group">
+                <label class="op-item"><input type="checkbox" id="add" checked> Addition</label>
+                <label class="op-item"><input type="checkbox" id="sub" checked> Subtraction</label>
+                <label class="op-item"><input type="checkbox" id="mul"> Multiplication</label>
+                <label class="op-item"><input type="checkbox" id="div"> Division</label>
+            </div>
+        </div>
+
+        <button onclick="generate()">Generate & Print PDF</button>
+    </main>
+
+    <section class="seo-content">
+        <h2>Why use this Math Generator?</h2>
+        <p>
+            As children move into <strong>Grade 1 to 3 arithmetic</strong>, mastering addition and subtraction fluency is vital. Unlike cluttered apps, this <strong>printable math drill</strong> provides a distraction-free environment. Using pen and paper helps reinforce memory and fine motor skills. 
+        </p>
+        <p>
+            This tool is designed for the <strong>Common Core</strong> curriculum, allowing you to customize difficulty from simple single-digit sums to <strong>3-digit arithmetic</strong> with carrying and borrowing.
+        </p>
+    </section>
+
+    <div id="worksheet">
+        <div class="sheet-header">
+            <div class="title-area"><h2>Arithmetic Practice</h2></div>
+            <div class="meta-area">
+                Name: ____________________<br>
+                Date: _________ Score: ____ / <span id="score-total"></span>
+            </div>
+        </div>
+        
+        <div id="grid-target" class="grid"></div>
+
+        <div class="sheet-footer">
+            FREE GRADE 3 MATH SERIES &bull; NO LOGIN REQUIRED &bull; DAILY PRACTICE
+        </div>
+    </div>
+
+    <script>
+        function getRandom(min, max) { 
+            return Math.floor(Math.random() * (max - min + 1)) + min; 
+        }
+
+        function generate() {
+            const count = parseInt(document.getElementById('count').value);
+            const maxVal = parseInt(document.getElementById('max').value);
+            const grid = document.getElementById('grid-target');
+            
+            let ops = [];
+            if(document.getElementById('add').checked) ops.push('+');
+            if(document.getElementById('sub').checked) ops.push('-');
+            if(document.getElementById('mul').checked) ops.push('×');
+            if(document.getElementById('div').checked) ops.push('÷');
+
+            if(ops.length === 0) {
+                alert("Please select an operation.");
+                return;
+            }
+
+            grid.innerHTML = '';
+            grid.className = "grid count-" + count;
+            document.getElementById('score-total').innerText = count;
+
+            for (let i = 1; i <= count; i++) {
+                let op = ops[Math.floor(Math.random() * ops.length)];
+                let n1, n2;
+
+                if (op === '+') {
+                    n1 = getRandom(1, maxVal); n2 = getRandom(1, maxVal);
+                } else if (op === '-') {
+                    n1 = getRandom(1, maxVal); n2 = getRandom(1, n1);
+                } else if (op === '×') {
+                    n1 = getRandom(1, maxVal > 20 ? 12 : 10); n2 = getRandom(1, 10);
+                } else {
+                    let f = getRandom(1, 10); n2 = getRandom(1, 12); n1 = f * n2;
+                    op = '÷';
+                }
+
+                const cell = document.createElement('div');
+                cell.className = 'problem-cell';
+                cell.innerHTML = `
+                    <span class="prob-idx">${i}.</span>
+                    <span class="num-box">${n1}</span>
+                    <span class="op-box">${op}</span>
+                    <span class="num-box">${n2}</span>
+                    <span class="eq-box">=</span>
+                    <div class="answer-line"></div>
+                `;
+                grid.appendChild(cell);
+            }
+
+            document.getElementById('worksheet').style.display = 'flex';
+            setTimeout(() => { window.print(); }, 300);
+        }
+    </script>
+</body>
+</html>
